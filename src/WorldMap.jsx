@@ -11,6 +11,7 @@ import { getVisaRequirement, VISA_COLORS, VISA_TYPES, countryNames, passportName
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
 // Country name to ISO code mapping (for cases where TopoJSON doesn't have ISO codes)
+// Includes abbreviations and alternative names used by world-atlas TopoJSON
 const countryNameToCode = {
   'United States of America': 'US',
   'United States': 'US',
@@ -40,18 +41,36 @@ const countryNameToCode = {
   'Bangladesh': 'BD',
   'Sri Lanka': 'LK',
   'Maldives': 'MV',
+  // Abbreviated and alternative names
+  'Dominican Rep.': 'DO',
   'Dominican Republic': 'DO',
   'Bosnia and Herzegovina': 'BA',
+  'Bosnia & Herzegovina': 'BA',
   'Bosnia': 'BA',
-  'North Macedonia': 'MK',
   'Macedonia': 'MK',
+  'North Macedonia': 'MK',
+  'FYROM': 'MK',
   'South Sudan': 'SS',
+  'S. Sudan': 'SS',
   'Central African Republic': 'CF',
-  'DR Congo': 'CD',
+  'Central African Rep.': 'CF',
+  'C.A.R.': 'CF',
+  'CAR': 'CF',
   'Democratic Republic of the Congo': 'CD',
-  'Congo': 'CG',
+  'DR Congo': 'CD',
+  'Congo (Kinshasa)': 'CD',
+  'Congo, Democratic Republic of': 'CD',
+  'Congo, Dem. Rep.': 'CD',
+  'Zaire': 'CD',
   'Republic of the Congo': 'CG',
+  'Congo': 'CG',
+  'Congo (Brazzaville)': 'CG',
+  'Congo, Republic of': 'CG',
+  'Congo, Rep.': 'CG',
   'Equatorial Guinea': 'GQ',
+  'Eq. Guinea': 'GQ',
+  'Equat. Guinea': 'GQ',
+  'Somaliland': 'SO-SL',
 };
 
 const WorldMap = ({ selectedPassports }) => {
@@ -82,14 +101,8 @@ const WorldMap = ({ selectedPassports }) => {
         'SGP': 'SG', 'AUS': 'AU', 'NZL': 'NZ', 'BRA': 'BR', 'ARG': 'AR',
         'CHL': 'CL', 'THA': 'TH', 'IDN': 'ID', 'IND': 'IN', 'CHN': 'CN',
         'RUS': 'RU', 'NPL': 'NP', 'BGD': 'BD', 'LKA': 'LK', 'MDV': 'MV',
-        'DOM': 'DO', // Dominican Republic
-        'BIH': 'BA', // Bosnia and Herzegovina
-        'MKD': 'MK', // North Macedonia
-        'SSD': 'SS', // South Sudan
-        'CAF': 'CF', // Central African Republic
-        'COD': 'CD', // DR Congo
-        'COG': 'CG', // Republic of the Congo
-        'GNQ': 'GQ', // Equatorial Guinea
+        'DOM': 'DO', 'BIH': 'BA', 'MKD': 'MK', 'SSD': 'SS', 'CAF': 'CF',
+        'COD': 'CD', 'COG': 'CG', 'GNQ': 'GQ'
       };
       code = iso3ToIso2[props.ISO_A3];
     }
@@ -101,21 +114,56 @@ const WorldMap = ({ selectedPassports }) => {
         // First try exact match in countryNameToCode
         code = countryNameToCode[name];
         
-        // Then try case-insensitive match in countryNameToCode
+        // If not found, try case-insensitive match in countryNameToCode
         if (!code) {
-          const matchedKey = Object.keys(countryNameToCode).find(
+          code = Object.keys(countryNameToCode).find(
             key => key.toLowerCase() === name.toLowerCase()
-          );
-          if (matchedKey) {
-            code = countryNameToCode[matchedKey];
-          }
+          ) ? countryNameToCode[Object.keys(countryNameToCode).find(
+            key => key.toLowerCase() === name.toLowerCase()
+          )] : null;
         }
         
-        // Finally try matching against countryNames
+        // If still not found, try exact match in countryNames
         if (!code) {
           code = Object.keys(countryNames).find(
             key => countryNames[key].toLowerCase() === name.toLowerCase()
           );
+        }
+        
+        // If still not found, try normalized match (remove punctuation, extra spaces)
+        if (!code) {
+          const normalizedName = name.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
+          code = Object.keys(countryNames).find(
+            key => {
+              const countryName = countryNames[key].toLowerCase().replace(/\s+/g, ' ').trim();
+              return countryName === normalizedName;
+            }
+          );
+        }
+        
+        // If still not found, try smart partial matching for known abbreviations
+        if (!code) {
+          const normalizedName = name.toLowerCase().replace(/[.,]/g, '').trim();
+          // Specific known abbreviations
+          if (normalizedName.includes('dominican') && normalizedName.includes('rep')) {
+            code = 'DO';
+          } else if (normalizedName.includes('bosnia') || normalizedName.includes('herzegovina')) {
+            code = 'BA';
+          } else if (normalizedName.includes('macedonia') && !normalizedName.includes('north')) {
+            code = 'MK';
+          } else if (normalizedName.includes('south') && normalizedName.includes('sudan')) {
+            code = 'SS';
+          } else if (normalizedName.includes('central') && normalizedName.includes('african')) {
+            code = 'CF';
+          } else if ((normalizedName.includes('democratic') || normalizedName.includes('dr')) && 
+                     (normalizedName.includes('congo') || normalizedName.includes('zaire'))) {
+            code = 'CD';
+          } else if (normalizedName.includes('congo') && !normalizedName.includes('democratic') && 
+                     !normalizedName.includes('dr') && !normalizedName.includes('zaire')) {
+            code = 'CG';
+          } else if (normalizedName.includes('equatorial') && normalizedName.includes('guinea')) {
+            code = 'GQ';
+          }
         }
       }
     }

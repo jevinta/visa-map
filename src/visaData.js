@@ -229,6 +229,7 @@ export const countryNames = {
   SM: 'San Marino',
   SN: 'Senegal',
   SO: 'Somalia',
+  'SO-SL': 'Somaliland', // Somaliland (unrecognized state)
   SR: 'Suriname',
   SS: 'South Sudan',
   ST: 'São Tomé and Príncipe',
@@ -497,7 +498,7 @@ visaRequirements.US = {
   KM: VISA_TYPES.VISA_ON_ARRIVAL, // Comoros (visa on arrival)
   MG: VISA_TYPES.VISA_ON_ARRIVAL, // Madagascar (visa on arrival)
   MZ: VISA_TYPES.ETA, // Mozambique (ETA required)
-  AO: VISA_TYPES.VISA_REQUIRED, // Angola
+  AO: VISA_TYPES.VISA_FREE, // Angola
   CD: VISA_TYPES.E_VISA, // DR Congo (e-visa available)
   CF: VISA_TYPES.VISA_REQUIRED, // Central African Republic
   TD: VISA_TYPES.TRAVEL_RESTRICTED, // Chad (travel restricted)
@@ -506,6 +507,7 @@ visaRequirements.US = {
   ER: VISA_TYPES.VISA_REQUIRED, // Eritrea
   DJ: VISA_TYPES.E_VISA, // Djibouti (e-visa available)
   SO: VISA_TYPES.E_VISA, // Somalia (e-visa available)
+  'SO-SL': VISA_TYPES.VISA_ON_ARRIVAL, // Somaliland (visa on arrival)
   LY: VISA_TYPES.E_VISA, // Libya (e-visa available)
   DZ: VISA_TYPES.VISA_REQUIRED, // Algeria
   MR: VISA_TYPES.E_VISA, // Mauritania (e-visa available)
@@ -523,7 +525,6 @@ visaRequirements.US = {
   // Remaining countries - visa free
   AI: VISA_TYPES.VISA_FREE, // Anguilla
   AS: VISA_TYPES.VISA_FREE, // American Samoa
-  AQ: VISA_TYPES.VISA_FREE, // Antarctica
   AX: VISA_TYPES.VISA_FREE, // Åland Islands
   BZ: VISA_TYPES.VISA_FREE, // Belize
   BL: VISA_TYPES.VISA_FREE, // Saint Barthélemy
