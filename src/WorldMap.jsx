@@ -40,6 +40,18 @@ const countryNameToCode = {
   'Bangladesh': 'BD',
   'Sri Lanka': 'LK',
   'Maldives': 'MV',
+  'Dominican Republic': 'DO',
+  'Bosnia and Herzegovina': 'BA',
+  'Bosnia': 'BA',
+  'North Macedonia': 'MK',
+  'Macedonia': 'MK',
+  'South Sudan': 'SS',
+  'Central African Republic': 'CF',
+  'DR Congo': 'CD',
+  'Democratic Republic of the Congo': 'CD',
+  'Congo': 'CG',
+  'Republic of the Congo': 'CG',
+  'Equatorial Guinea': 'GQ',
 };
 
 const WorldMap = ({ selectedPassports }) => {
@@ -69,7 +81,15 @@ const WorldMap = ({ selectedPassports }) => {
         'DEU': 'DE', 'ITA': 'IT', 'ESP': 'ES', 'JPN': 'JP', 'KOR': 'KR',
         'SGP': 'SG', 'AUS': 'AU', 'NZL': 'NZ', 'BRA': 'BR', 'ARG': 'AR',
         'CHL': 'CL', 'THA': 'TH', 'IDN': 'ID', 'IND': 'IN', 'CHN': 'CN',
-        'RUS': 'RU', 'NPL': 'NP', 'BGD': 'BD', 'LKA': 'LK', 'MDV': 'MV'
+        'RUS': 'RU', 'NPL': 'NP', 'BGD': 'BD', 'LKA': 'LK', 'MDV': 'MV',
+        'DOM': 'DO', // Dominican Republic
+        'BIH': 'BA', // Bosnia and Herzegovina
+        'MKD': 'MK', // North Macedonia
+        'SSD': 'SS', // South Sudan
+        'CAF': 'CF', // Central African Republic
+        'COD': 'CD', // DR Congo
+        'COG': 'CG', // Republic of the Congo
+        'GNQ': 'GQ', // Equatorial Guinea
       };
       code = iso3ToIso2[props.ISO_A3];
     }
@@ -78,9 +98,25 @@ const WorldMap = ({ selectedPassports }) => {
     if (!code) {
       const name = props.NAME || props.NAME_LONG || props.NAME_EN || props.name || props.ADMIN;
       if (name) {
-        code = countryNameToCode[name] || Object.keys(countryNames).find(
-          key => countryNames[key].toLowerCase() === name.toLowerCase()
-        );
+        // First try exact match in countryNameToCode
+        code = countryNameToCode[name];
+        
+        // Then try case-insensitive match in countryNameToCode
+        if (!code) {
+          const matchedKey = Object.keys(countryNameToCode).find(
+            key => key.toLowerCase() === name.toLowerCase()
+          );
+          if (matchedKey) {
+            code = countryNameToCode[matchedKey];
+          }
+        }
+        
+        // Finally try matching against countryNames
+        if (!code) {
+          code = Object.keys(countryNames).find(
+            key => countryNames[key].toLowerCase() === name.toLowerCase()
+          );
+        }
       }
     }
     
