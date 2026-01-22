@@ -1101,6 +1101,220 @@ allCountryCodes.forEach(countryCode => {
 // Antarctica should remain "no data" for AF.
 visaRequirements.AF.AQ = null;
 
+// Algerian Passport holders - Comprehensive visa requirements
+// Source: https://en.wikipedia.org/wiki/Visa_requirements_for_Algerian_citizens
+visaRequirements.DZ = {
+  ...visaRequirements.DZ,
+  // Visa-free countries
+  AO: VISA_TYPES.VISA_FREE, // Angola
+  BB: VISA_TYPES.VISA_FREE, // Barbados
+  BJ: VISA_TYPES.VISA_FREE, // Benin
+  DM: VISA_TYPES.VISA_FREE, // Dominica
+  EC: VISA_TYPES.VISA_FREE, // Ecuador
+  GM: VISA_TYPES.VISA_FREE, // Gambia
+  GN: VISA_TYPES.VISA_FREE, // Guinea
+  HT: VISA_TYPES.VISA_FREE, // Haiti
+  KE: VISA_TYPES.VISA_FREE, // Kenya
+  LY: VISA_TYPES.VISA_FREE, // Libya
+  MY: VISA_TYPES.VISA_FREE, // Malaysia
+  ML: VISA_TYPES.VISA_FREE, // Mali
+  MR: VISA_TYPES.VISA_FREE, // Mauritania
+  FM: VISA_TYPES.VISA_FREE, // Micronesia
+  RW: VISA_TYPES.VISA_FREE, // Rwanda
+  VC: VISA_TYPES.VISA_FREE, // Saint Vincent and the Grenadines
+  WS: VISA_TYPES.VISA_FREE, // Samoa
+  SR: VISA_TYPES.VISA_FREE, // Suriname
+  SY: VISA_TYPES.VISA_FREE, // Syria
+  TN: VISA_TYPES.VISA_FREE, // Tunisia
+  TR: VISA_TYPES.VISA_FREE, // Turkey
+  // ETA countries
+  SC: VISA_TYPES.ETA, // Seychelles
+  LK: VISA_TYPES.ETA, // Sri Lanka
+  // Visa on arrival countries
+  BH: VISA_TYPES.VISA_ON_ARRIVAL, // Bahrain
+  BO: VISA_TYPES.VISA_ON_ARRIVAL, // Bolivia
+  BI: VISA_TYPES.VISA_ON_ARRIVAL, // Burundi
+  KH: VISA_TYPES.VISA_ON_ARRIVAL, // Cambodia
+  CV: VISA_TYPES.VISA_ON_ARRIVAL, // Cape Verde
+  KM: VISA_TYPES.VISA_ON_ARRIVAL, // Comoros
+  ET: VISA_TYPES.VISA_ON_ARRIVAL, // Ethiopia
+  GH: VISA_TYPES.VISA_ON_ARRIVAL, // Ghana
+  GW: VISA_TYPES.VISA_ON_ARRIVAL, // Guinea-Bissau
+  IR: VISA_TYPES.VISA_ON_ARRIVAL, // Iran
+  JO: VISA_TYPES.VISA_ON_ARRIVAL, // Jordan
+  LB: VISA_TYPES.VISA_ON_ARRIVAL, // Lebanon
+  MG: VISA_TYPES.VISA_ON_ARRIVAL, // Madagascar
+  MV: VISA_TYPES.VISA_ON_ARRIVAL, // Maldives
+  MU: VISA_TYPES.VISA_ON_ARRIVAL, // Mauritius
+  MZ: VISA_TYPES.VISA_ON_ARRIVAL, // Mozambique
+  NP: VISA_TYPES.VISA_ON_ARRIVAL, // Nepal
+  NI: VISA_TYPES.VISA_ON_ARRIVAL, // Nicaragua
+  PW: VISA_TYPES.VISA_ON_ARRIVAL, // Palau
+  SN: VISA_TYPES.VISA_ON_ARRIVAL, // Senegal
+  TJ: VISA_TYPES.VISA_ON_ARRIVAL, // Tajikistan
+  TZ: VISA_TYPES.VISA_ON_ARRIVAL, // Tanzania
+  TL: VISA_TYPES.VISA_ON_ARRIVAL, // Timor-Leste
+  TV: VISA_TYPES.VISA_ON_ARRIVAL, // Tuvalu
+  YE: VISA_TYPES.VISA_ON_ARRIVAL, // Yemen
+  ZW: VISA_TYPES.VISA_ON_ARRIVAL, // Zimbabwe
+  // E-visa countries
+  AL: VISA_TYPES.E_VISA, // Albania
+  AG: VISA_TYPES.E_VISA, // Antigua and Barbuda
+  AM: VISA_TYPES.E_VISA, // Armenia
+  AZ: VISA_TYPES.E_VISA, // Azerbaijan
+  BS: VISA_TYPES.E_VISA, // Bahamas
+  BT: VISA_TYPES.E_VISA, // Bhutan
+  BW: VISA_TYPES.E_VISA, // Botswana
+  BF: VISA_TYPES.E_VISA, // Burkina Faso
+  CM: VISA_TYPES.E_VISA, // Cameroon
+  TD: VISA_TYPES.E_VISA, // Chad
+  CO: VISA_TYPES.E_VISA, // Colombia
+  CD: VISA_TYPES.E_VISA, // DR Congo
+  CI: VISA_TYPES.E_VISA, // Côte d'Ivoire
+  CU: VISA_TYPES.E_VISA, // Cuba
+  DJ: VISA_TYPES.E_VISA, // Djibouti
+  GQ: VISA_TYPES.E_VISA, // Equatorial Guinea
+  FJ: VISA_TYPES.E_VISA, // Fiji
+  GA: VISA_TYPES.E_VISA, // Gabon
+  GE: VISA_TYPES.E_VISA, // Georgia
+  IQ: VISA_TYPES.E_VISA, // Iraq
+  KZ: VISA_TYPES.E_VISA, // Kazakhstan
+  KG: VISA_TYPES.E_VISA, // Kyrgyzstan
+  LS: VISA_TYPES.E_VISA, // Lesotho
+  LR: VISA_TYPES.E_VISA, // Liberia
+  MW: VISA_TYPES.E_VISA, // Malawi
+  MD: VISA_TYPES.E_VISA, // Moldova
+  MM: VISA_TYPES.E_VISA, // Myanmar
+  NA: VISA_TYPES.E_VISA, // Namibia
+  NG: VISA_TYPES.E_VISA, // Nigeria
+  PK: VISA_TYPES.E_VISA, // Pakistan
+  PG: VISA_TYPES.E_VISA, // Papua New Guinea
+  QA: VISA_TYPES.E_VISA, // Qatar
+  KN: VISA_TYPES.E_VISA, // Saint Kitts and Nevis
+  ST: VISA_TYPES.E_VISA, // São Tomé and Príncipe
+  SL: VISA_TYPES.E_VISA, // Sierra Leone
+  SO: VISA_TYPES.E_VISA, // Somalia
+  ZA: VISA_TYPES.E_VISA, // South Africa
+  SS: VISA_TYPES.E_VISA, // South Sudan
+  TH: VISA_TYPES.E_VISA, // Thailand
+  TG: VISA_TYPES.E_VISA, // Togo
+  TT: VISA_TYPES.E_VISA, // Trinidad and Tobago
+  UG: VISA_TYPES.E_VISA, // Uganda
+  UZ: VISA_TYPES.E_VISA, // Uzbekistan
+  VU: VISA_TYPES.E_VISA, // Vanuatu
+  VN: VISA_TYPES.E_VISA, // Vietnam
+  ZM: VISA_TYPES.E_VISA, // Zambia
+  // Visa required countries
+  AF: VISA_TYPES.VISA_REQUIRED, // Afghanistan
+  AD: VISA_TYPES.VISA_REQUIRED, // Andorra
+  AR: VISA_TYPES.VISA_REQUIRED, // Argentina
+  AT: VISA_TYPES.VISA_REQUIRED, // Austria
+  BD: VISA_TYPES.VISA_REQUIRED, // Bangladesh
+  BY: VISA_TYPES.VISA_REQUIRED, // Belarus
+  BE: VISA_TYPES.VISA_REQUIRED, // Belgium
+  BZ: VISA_TYPES.VISA_REQUIRED, // Belize
+  BA: VISA_TYPES.VISA_REQUIRED, // Bosnia and Herzegovina
+  BR: VISA_TYPES.VISA_REQUIRED, // Brazil
+  BN: VISA_TYPES.VISA_REQUIRED, // Brunei
+  BG: VISA_TYPES.VISA_REQUIRED, // Bulgaria
+  CA: VISA_TYPES.VISA_REQUIRED, // Canada
+  CF: VISA_TYPES.VISA_REQUIRED, // Central African Republic
+  CL: VISA_TYPES.VISA_REQUIRED, // Chile
+  CN: VISA_TYPES.VISA_REQUIRED, // China
+  CG: VISA_TYPES.VISA_REQUIRED, // Republic of the Congo
+  CR: VISA_TYPES.VISA_REQUIRED, // Costa Rica
+  HR: VISA_TYPES.VISA_REQUIRED, // Croatia
+  CY: VISA_TYPES.VISA_REQUIRED, // Cyprus
+  CZ: VISA_TYPES.VISA_REQUIRED, // Czechia
+  DK: VISA_TYPES.VISA_REQUIRED, // Denmark
+  DO: VISA_TYPES.VISA_REQUIRED, // Dominican Republic
+  EG: VISA_TYPES.VISA_REQUIRED, // Egypt
+  SV: VISA_TYPES.VISA_REQUIRED, // El Salvador
+  ER: VISA_TYPES.VISA_REQUIRED, // Eritrea
+  EE: VISA_TYPES.VISA_REQUIRED, // Estonia
+  SZ: VISA_TYPES.VISA_REQUIRED, // Eswatini
+  FI: VISA_TYPES.VISA_REQUIRED, // Finland
+  FR: VISA_TYPES.VISA_REQUIRED, // France
+  DE: VISA_TYPES.VISA_REQUIRED, // Germany
+  GR: VISA_TYPES.VISA_REQUIRED, // Greece
+  GD: VISA_TYPES.VISA_REQUIRED, // Grenada
+  GT: VISA_TYPES.VISA_REQUIRED, // Guatemala
+  GY: VISA_TYPES.VISA_REQUIRED, // Guyana
+  HN: VISA_TYPES.VISA_REQUIRED, // Honduras
+  HU: VISA_TYPES.VISA_REQUIRED, // Hungary
+  IS: VISA_TYPES.VISA_REQUIRED, // Iceland
+  IN: VISA_TYPES.VISA_REQUIRED, // India
+  ID: VISA_TYPES.VISA_REQUIRED, // Indonesia
+  IE: VISA_TYPES.VISA_REQUIRED, // Ireland
+  IL: VISA_TYPES.VISA_REQUIRED, // Israel
+  IT: VISA_TYPES.VISA_REQUIRED, // Italy
+  JM: VISA_TYPES.VISA_REQUIRED, // Jamaica
+  JP: VISA_TYPES.VISA_REQUIRED, // Japan
+  KI: VISA_TYPES.VISA_REQUIRED, // Kiribati
+  KP: VISA_TYPES.VISA_REQUIRED, // North Korea
+  KR: VISA_TYPES.VISA_REQUIRED, // South Korea
+  KW: VISA_TYPES.VISA_REQUIRED, // Kuwait
+  LA: VISA_TYPES.VISA_REQUIRED, // Laos
+  LV: VISA_TYPES.VISA_REQUIRED, // Latvia
+  LI: VISA_TYPES.VISA_REQUIRED, // Liechtenstein
+  LT: VISA_TYPES.VISA_REQUIRED, // Lithuania
+  LU: VISA_TYPES.VISA_REQUIRED, // Luxembourg
+  MT: VISA_TYPES.VISA_REQUIRED, // Malta
+  MH: VISA_TYPES.VISA_REQUIRED, // Marshall Islands
+  MX: VISA_TYPES.VISA_REQUIRED, // Mexico
+  MC: VISA_TYPES.VISA_REQUIRED, // Monaco
+  MN: VISA_TYPES.VISA_REQUIRED, // Mongolia
+  ME: VISA_TYPES.VISA_REQUIRED, // Montenegro
+  MA: VISA_TYPES.VISA_REQUIRED, // Morocco
+  NR: VISA_TYPES.VISA_REQUIRED, // Nauru
+  NL: VISA_TYPES.VISA_REQUIRED, // Netherlands
+  NZ: VISA_TYPES.VISA_REQUIRED, // New Zealand
+  NE: VISA_TYPES.VISA_REQUIRED, // Niger
+  MK: VISA_TYPES.VISA_REQUIRED, // North Macedonia
+  NO: VISA_TYPES.VISA_REQUIRED, // Norway
+  OM: VISA_TYPES.VISA_REQUIRED, // Oman
+  PA: VISA_TYPES.VISA_REQUIRED, // Panama
+  PY: VISA_TYPES.VISA_REQUIRED, // Paraguay
+  PE: VISA_TYPES.VISA_REQUIRED, // Peru
+  PH: VISA_TYPES.VISA_REQUIRED, // Philippines
+  PL: VISA_TYPES.VISA_REQUIRED, // Poland
+  PT: VISA_TYPES.VISA_REQUIRED, // Portugal
+  RO: VISA_TYPES.VISA_REQUIRED, // Romania
+  RU: VISA_TYPES.VISA_REQUIRED, // Russia
+  LC: VISA_TYPES.VISA_REQUIRED, // Saint Lucia
+  SM: VISA_TYPES.VISA_REQUIRED, // San Marino
+  SA: VISA_TYPES.VISA_REQUIRED, // Saudi Arabia
+  RS: VISA_TYPES.VISA_REQUIRED, // Serbia
+  SG: VISA_TYPES.VISA_REQUIRED, // Singapore
+  SK: VISA_TYPES.VISA_REQUIRED, // Slovakia
+  SI: VISA_TYPES.VISA_REQUIRED, // Slovenia
+  SB: VISA_TYPES.VISA_REQUIRED, // Solomon Islands
+  ES: VISA_TYPES.VISA_REQUIRED, // Spain
+  SD: VISA_TYPES.VISA_REQUIRED, // Sudan
+  SE: VISA_TYPES.VISA_REQUIRED, // Sweden
+  CH: VISA_TYPES.VISA_REQUIRED, // Switzerland
+  TO: VISA_TYPES.VISA_REQUIRED, // Tonga
+  TM: VISA_TYPES.VISA_REQUIRED, // Turkmenistan
+  UA: VISA_TYPES.VISA_REQUIRED, // Ukraine
+  AE: VISA_TYPES.VISA_REQUIRED, // United Arab Emirates
+  GB: VISA_TYPES.VISA_REQUIRED, // United Kingdom
+  US: VISA_TYPES.VISA_REQUIRED, // United States
+  UY: VISA_TYPES.VISA_REQUIRED, // Uruguay
+  VA: VISA_TYPES.VISA_REQUIRED, // Vatican City
+  VE: VISA_TYPES.VISA_REQUIRED, // Venezuela
+};
+
+// For Algerian passport holders, any country not explicitly listed is visa required.
+// This ensures full coverage across the same country set as the US map data.
+allCountryCodes.forEach(countryCode => {
+  if (!visaRequirements.DZ[countryCode]) {
+    visaRequirements.DZ[countryCode] = VISA_TYPES.VISA_REQUIRED;
+  }
+});
+
+// Antarctica should remain "no data" for DZ.
+visaRequirements.DZ.AQ = null;
+
 // Get visa requirement for a passport holder visiting a country
 export function getVisaRequirement(passportCode, countryCode) {
   if (!passportCode || !countryCode) return null;
