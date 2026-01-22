@@ -113,7 +113,9 @@ function App() {
                         style={{ backgroundColor: VISA_COLORS[value] }}
                       />
                       <span className="text-xs text-gray-600">
-                        {value.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        {value === VISA_TYPES.ETA 
+                          ? 'ETA (Electronic Travel Authorization)'
+                          : value.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </span>
                     </div>
                   ))}

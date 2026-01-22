@@ -113,10 +113,11 @@ const WorldMap = ({ selectedPassports }) => {
 
     const statusPriority = {
       [VISA_TYPES.VISA_FREE]: 1,
-      [VISA_TYPES.VISA_ON_ARRIVAL]: 2,
-      [VISA_TYPES.E_VISA]: 3,
-      [VISA_TYPES.VISA_REQUIRED]: 4,
-      [VISA_TYPES.NOT_ALLOWED]: 5,
+      [VISA_TYPES.ETA]: 2, // ETA is easier than visa on arrival but requires pre-authorization
+      [VISA_TYPES.VISA_ON_ARRIVAL]: 3,
+      [VISA_TYPES.E_VISA]: 4,
+      [VISA_TYPES.VISA_REQUIRED]: 5,
+      [VISA_TYPES.NOT_ALLOWED]: 6,
     };
 
     selectedPassports.forEach(passport => {
@@ -142,9 +143,14 @@ const WorldMap = ({ selectedPassports }) => {
       const requirements = selectedPassports.map(passport => {
         const requirement = getVisaRequirement(passport, countryCode);
         const passportName = passportNames[passport] || countryNames[passport] || passport || 'Unknown';
-        const statusText = requirement 
-          ? requirement.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
-          : 'No Data';
+        let statusText = 'No Data';
+        if (requirement) {
+          if (requirement === VISA_TYPES.ETA) {
+            statusText = 'ETA (Electronic Travel Authorization)';
+          } else {
+            statusText = requirement.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+          }
+        }
         return `${passportName}: ${statusText}`;
       }).join('\n');
       
