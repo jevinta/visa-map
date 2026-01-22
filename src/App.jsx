@@ -115,6 +115,8 @@ function App() {
                       <span className="text-xs text-gray-600">
                         {value === VISA_TYPES.ETA 
                           ? 'ETA (Electronic Travel Authorization)'
+                          : value === VISA_TYPES.RIGHT_OF_ABODE
+                          ? 'Right of Abode'
                           : value.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </span>
                     </div>

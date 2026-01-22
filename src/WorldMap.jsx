@@ -112,12 +112,13 @@ const WorldMap = ({ selectedPassports }) => {
     let bestPriority = Infinity;
 
     const statusPriority = {
+      [VISA_TYPES.RIGHT_OF_ABODE]: 0, // Right of abode is the best status
       [VISA_TYPES.VISA_FREE]: 1,
       [VISA_TYPES.ETA]: 2, // ETA is easier than visa on arrival but requires pre-authorization
       [VISA_TYPES.VISA_ON_ARRIVAL]: 3,
       [VISA_TYPES.E_VISA]: 4,
       [VISA_TYPES.VISA_REQUIRED]: 5,
-      [VISA_TYPES.NOT_ALLOWED]: 6,
+      [VISA_TYPES.TRAVEL_RESTRICTED]: 6,
     };
 
     selectedPassports.forEach(passport => {
@@ -147,6 +148,8 @@ const WorldMap = ({ selectedPassports }) => {
         if (requirement) {
           if (requirement === VISA_TYPES.ETA) {
             statusText = 'ETA (Electronic Travel Authorization)';
+          } else if (requirement === VISA_TYPES.RIGHT_OF_ABODE) {
+            statusText = 'Right of Abode';
           } else {
             statusText = requirement.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
           }

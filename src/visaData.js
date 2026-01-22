@@ -1,6 +1,7 @@
 // Visa requirement types
 export const VISA_TYPES = {
   VISA_FREE: 'visa_free',
+  RIGHT_OF_ABODE: 'right_of_abode', // Right of abode / Compact of Free Association
   ETA: 'eta', // Electronic Travel Authorization
   VISA_ON_ARRIVAL: 'visa_on_arrival',
   E_VISA: 'e_visa',
@@ -11,6 +12,7 @@ export const VISA_TYPES = {
 // Color mapping for visa types
 export const VISA_COLORS = {
   [VISA_TYPES.VISA_FREE]: '#10b981', // green
+  [VISA_TYPES.RIGHT_OF_ABODE]: '#22c55e', // bright green for right of abode
   [VISA_TYPES.ETA]: '#06b6d4', // cyan/teal for ETA
   [VISA_TYPES.VISA_ON_ARRIVAL]: '#3b82f6', // blue
   [VISA_TYPES.E_VISA]: '#8b5cf6', // purple
@@ -423,6 +425,7 @@ visaRequirements.US = {
   NP: VISA_TYPES.VISA_FREE, // Nepal
   BT: VISA_TYPES.VISA_REQUIRED, // Bhutan
   AF: VISA_TYPES.VISA_REQUIRED, // Afghanistan
+  KP: VISA_TYPES.TRAVEL_RESTRICTED, // North Korea (travel restricted)
   IR: VISA_TYPES.VISA_REQUIRED, // Iran
   IQ: VISA_TYPES.VISA_REQUIRED, // Iraq
   SY: VISA_TYPES.VISA_REQUIRED, // Syria
@@ -455,9 +458,9 @@ visaRequirements.US = {
   PF: VISA_TYPES.VISA_FREE, // French Polynesia
   WS: VISA_TYPES.VISA_FREE, // Samoa
   TO: VISA_TYPES.VISA_FREE, // Tonga
-  PW: VISA_TYPES.VISA_FREE, // Palau
-  FM: VISA_TYPES.VISA_FREE, // Micronesia
-  MH: VISA_TYPES.VISA_FREE, // Marshall Islands
+  PW: VISA_TYPES.RIGHT_OF_ABODE, // Palau (Compact of Free Association)
+  FM: VISA_TYPES.RIGHT_OF_ABODE, // Micronesia (Compact of Free Association)
+  MH: VISA_TYPES.RIGHT_OF_ABODE, // Marshall Islands (Compact of Free Association)
   KI: VISA_TYPES.VISA_FREE, // Kiribati
   TV: VISA_TYPES.VISA_FREE, // Tuvalu
   NR: VISA_TYPES.VISA_FREE, // Nauru
@@ -475,7 +478,7 @@ visaRequirements.US = {
   SN: VISA_TYPES.VISA_FREE, // Senegal
   GM: VISA_TYPES.VISA_FREE, // Gambia
   GW: VISA_TYPES.VISA_FREE, // Guinea-Bissau
-  CV: VISA_TYPES.VISA_FREE, // Cape Verde
+  CV: VISA_TYPES.ETA, // Cape Verde (ETA required)
   ST: VISA_TYPES.VISA_FREE, // São Tomé and Príncipe
   GA: VISA_TYPES.VISA_FREE, // Gabon
   CG: VISA_TYPES.VISA_FREE, // Republic of the Congo
@@ -489,14 +492,14 @@ visaRequirements.US = {
   SZ: VISA_TYPES.VISA_FREE, // Eswatini
   LS: VISA_TYPES.VISA_FREE, // Lesotho
   MU: VISA_TYPES.VISA_FREE, // Mauritius
-  SC: VISA_TYPES.VISA_FREE, // Seychelles
+  SC: VISA_TYPES.ETA, // Seychelles (ETA required)
   KM: VISA_TYPES.VISA_FREE, // Comoros
   MG: VISA_TYPES.VISA_FREE, // Madagascar
   MZ: VISA_TYPES.ETA, // Mozambique (ETA required)
   AO: VISA_TYPES.VISA_REQUIRED, // Angola
   CD: VISA_TYPES.VISA_REQUIRED, // DR Congo
   CF: VISA_TYPES.VISA_REQUIRED, // Central African Republic
-  TD: VISA_TYPES.VISA_REQUIRED, // Chad
+  TD: VISA_TYPES.TRAVEL_RESTRICTED, // Chad (travel restricted)
   SD: VISA_TYPES.VISA_REQUIRED, // Sudan
   SS: VISA_TYPES.VISA_REQUIRED, // South Sudan
   ER: VISA_TYPES.VISA_REQUIRED, // Eritrea
@@ -504,9 +507,9 @@ visaRequirements.US = {
   SO: VISA_TYPES.VISA_REQUIRED, // Somalia
   LY: VISA_TYPES.VISA_REQUIRED, // Libya
   DZ: VISA_TYPES.VISA_REQUIRED, // Algeria
-  NE: VISA_TYPES.VISA_REQUIRED, // Niger
-  ML: VISA_TYPES.VISA_REQUIRED, // Mali
-  BF: VISA_TYPES.VISA_REQUIRED, // Burkina Faso
+  NE: VISA_TYPES.TRAVEL_RESTRICTED, // Niger (travel restricted)
+  ML: VISA_TYPES.TRAVEL_RESTRICTED, // Mali (travel restricted)
+  BF: VISA_TYPES.TRAVEL_RESTRICTED, // Burkina Faso (travel restricted)
   CI: VISA_TYPES.VISA_REQUIRED, // Côte d'Ivoire
   GN: VISA_TYPES.VISA_REQUIRED, // Guinea
   SL: VISA_TYPES.VISA_REQUIRED, // Sierra Leone
