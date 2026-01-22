@@ -5,7 +5,7 @@ import {
   Geography,
   ZoomableGroup
 } from 'react-simple-maps';
-import { getVisaRequirement, VISA_COLORS, VISA_TYPES, countryNames } from './visaData';
+import { getVisaRequirement, VISA_COLORS, VISA_TYPES, countryNames, passportNames } from './visaData';
 
 // Using world-atlas TopoJSON - we'll handle different property formats
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -141,7 +141,7 @@ const WorldMap = ({ selectedPassports }) => {
     } else {
       const requirements = selectedPassports.map(passport => {
         const requirement = getVisaRequirement(passport, countryCode);
-        const passportName = countryNames[passport] || passport || 'Unknown';
+        const passportName = passportNames[passport] || countryNames[passport] || passport || 'Unknown';
         const statusText = requirement 
           ? requirement.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
           : 'No Data';

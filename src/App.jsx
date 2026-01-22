@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import WorldMap from './WorldMap';
-import { countryNames, VISA_TYPES, VISA_COLORS } from './visaData';
+import { passportNames, countryNames, VISA_TYPES, VISA_COLORS } from './visaData';
 
-// Available passports (countries with data)
-const availablePassports = Object.keys(countryNames).sort((a, b) => 
-  countryNames[a].localeCompare(countryNames[b])
+// Available passports (all passport types - countries + special passports)
+const availablePassports = Object.keys(passportNames).sort((a, b) => 
+  passportNames[a].localeCompare(passportNames[b])
 );
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
                       className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <span className="text-sm text-gray-700">
-                      {countryNames[passportCode]}
+                      {passportNames[passportCode]}
                     </span>
                   </label>
                 ))}
@@ -87,7 +87,7 @@ function App() {
                         key={code}
                         className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
                       >
-                        {countryNames[code]}
+                        {passportNames[code]}
                         <button
                           onClick={() => handlePassportToggle(code)}
                           className="ml-1.5 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-blue-200"
