@@ -228,88 +228,108 @@ function parseWikipediaTable(html) {
     return results;
   }
   
-  // Use the first wikitable (usually the main one)
-  const table = tables.first();
-  const rows = table.find('tr');
+  // Try all tables and find the one with the most valid entries
+  let bestTable = null;
+  let bestResults = [];
   
-  let countryColIndex = -1;
-  let visaColIndex = -1;
-  let headerFound = false;
-  
-  rows.each((index, row) => {
-    const $row = $(row);
-    const cells = $row.find('th, td');
+  tables.each((tableIndex, tableElement) => {
+    const table = $(tableElement);
+    const rows = table.find('tr');
+    const tableResults = [];
     
-    // Check if this is a header row
-    if ($row.find('th').length > 0) {
-      cells.each((cellIndex, cell) => {
-        const cellText = $(cell).text().toLowerCase().trim();
-        if (cellText.includes('country') || cellText.includes('territory')) {
-          countryColIndex = cellIndex;
-        }
-        if (cellText.includes('visa requirement') || 
-            (cellText.includes('requirement') && !cellText.includes('allowed stay'))) {
-          visaColIndex = cellIndex;
-        }
+    let countryColIndex = -1;
+    let visaColIndex = -1;
+    let headerFound = false;
+    
+    rows.each((index, row) => {
+      const $row = $(row);
+      const cells = $row.find('th, td');
+      
+      // Check if this is a header row
+      if ($row.find('th').length > 0) {
+        cells.each((cellIndex, cell) => {
+          const cellText = $(cell).text().toLowerCase().trim();
+          if (cellText.includes('country') || cellText.includes('territory')) {
+            countryColIndex = cellIndex;
+          }
+          if (cellText.includes('visa requirement') || 
+              (cellText.includes('requirement') && !cellText.includes('allowed stay'))) {
+            visaColIndex = cellIndex;
+          }
+        });
+        headerFound = true;
+        return;
+      }
+      
+      // Skip if we haven't found headers yet
+      if (!headerFound) return;
+      
+      if (cells.length === 0) return;
+      
+      // Get country name
+      const countryCell = cells.eq(countryColIndex >= 0 ? countryColIndex : 0);
+      if (countryCell.length === 0) return;
+      
+      let countryName = countryCell.text()
+        .replace(/\[.*?\]/g, '') // Remove citations
+        .trim();
+      
+      // Also check for links in the cell
+      if (!countryName && countryCell.find('a').length > 0) {
+        countryName = countryCell.find('a').first().text().trim();
+      }
+      
+      if (!countryName || countryName.length < 2) return;
+      
+      // Skip section headers
+      const lowerName = countryName.toLowerCase();
+      if (lowerName.includes('independent countries') ||
+          lowerName.includes('territories') ||
+          lowerName.includes('dependent') ||
+          lowerName.includes('disputed') ||
+          lowerName.includes('notes') ||
+          lowerName === 'country' ||
+          lowerName === 'territory') {
+        return;
+      }
+      
+      // Get visa requirement
+      const visaCell = cells.eq(visaColIndex >= 0 ? visaColIndex : 1);
+      if (visaCell.length === 0) return;
+      
+      let visaRequirement = visaCell.text()
+        .replace(/\[.*?\]/g, '') // Remove citations
+        .trim();
+      
+      // Also check for links in the cell
+      if (!visaRequirement && visaCell.find('a').length > 0) {
+        visaRequirement = visaCell.find('a').first().text().trim();
+      }
+      
+      if (!visaRequirement) return;
+      
+      // Check if this looks like a valid visa requirement (not a date)
+      const requirementLower = visaRequirement.toLowerCase();
+      if (requirementLower.match(/^\d{1,2}\s+(january|february|march|april|may|june|july|august|september|october|november|december)/i) ||
+          requirementLower.match(/^\d{4}$/) ||
+          requirementLower.match(/^\d{1,2}\s+\d{4}$/)) {
+        return; // Skip date entries
+      }
+      
+      tableResults.push({
+        country: countryName,
+        requirement: visaRequirement
       });
-      headerFound = true;
-      return;
-    }
-    
-    // Skip if we haven't found headers yet
-    if (!headerFound) return;
-    
-    if (cells.length === 0) return;
-    
-    // Get country name
-    const countryCell = cells.eq(countryColIndex >= 0 ? countryColIndex : 0);
-    if (countryCell.length === 0) return;
-    
-    let countryName = countryCell.text()
-      .replace(/\[.*?\]/g, '') // Remove citations
-      .trim();
-    
-    // Also check for links in the cell
-    if (!countryName && countryCell.find('a').length > 0) {
-      countryName = countryCell.find('a').first().text().trim();
-    }
-    
-    if (!countryName || countryName.length < 2) return;
-    
-    // Skip section headers
-    const lowerName = countryName.toLowerCase();
-    if (lowerName.includes('independent countries') ||
-        lowerName.includes('territories') ||
-        lowerName.includes('dependent') ||
-        lowerName.includes('disputed') ||
-        lowerName.includes('notes') ||
-        lowerName === 'country' ||
-        lowerName === 'territory') {
-      return;
-    }
-    
-    // Get visa requirement
-    const visaCell = cells.eq(visaColIndex >= 0 ? visaColIndex : 1);
-    if (visaCell.length === 0) return;
-    
-    let visaRequirement = visaCell.text()
-      .replace(/\[.*?\]/g, '') // Remove citations
-      .trim();
-    
-    // Also check for links in the cell
-    if (!visaRequirement && visaCell.find('a').length > 0) {
-      visaRequirement = visaCell.find('a').first().text().trim();
-    }
-    
-    if (!visaRequirement) return;
-    
-    results.push({
-      country: countryName,
-      requirement: visaRequirement
     });
+    
+    // Use the table with the most valid entries (at least 50)
+    if (tableResults.length > bestResults.length && tableResults.length >= 50) {
+      bestResults = tableResults;
+      bestTable = table;
+    }
   });
   
-  return results;
+  return bestResults;
 }
 
 function generateCode(passportCode, entries) {
