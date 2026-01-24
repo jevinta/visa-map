@@ -54,33 +54,6 @@ When no passport is selected, all countries appear **gray** (no data). After sel
 
 ---
 
-## Getting started
-
-**Prerequisites:** Node.js 16+ and npm
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173).
-
-**Build:**
-
-```bash
-npm run build
-```
-
-Output is in `dist/`.
-
----
-
-## Data
-
-Visa data lives in `src/visaData.js`: `countryNames`, `passportNames`, and per-passport visa requirement mappings. The `scripts/` folder contains tooling for parsing Wikipedia visa tables (see `scripts/README.md`).
-
----
-
 ## License
 
 MIT
