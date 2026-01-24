@@ -1,27 +1,24 @@
-// Visa requirement types
 export const VISA_TYPES = {
   VISA_FREE: 'visa_free',
-  RIGHT_OF_ABODE: 'right_of_abode', // Right of abode / Compact of Free Association
-  ETA: 'eta', // Electronic Travel Authorization
+  RIGHT_OF_ABODE: 'right_of_abode',
+  ETA: 'eta',
   VISA_ON_ARRIVAL: 'visa_on_arrival',
   E_VISA: 'e_visa',
   VISA_REQUIRED: 'visa_required',
   TRAVEL_RESTRICTED: 'travel_restricted'
 };
 
-// Color mapping for visa types
 export const VISA_COLORS = {
-  [VISA_TYPES.VISA_FREE]: '#10b981', // green
-  [VISA_TYPES.RIGHT_OF_ABODE]: '#22c55e', // bright green for right of abode
-  [VISA_TYPES.ETA]: '#06b6d4', // cyan/teal for ETA
-  [VISA_TYPES.VISA_ON_ARRIVAL]: '#3b82f6', // blue
-  [VISA_TYPES.E_VISA]: '#8b5cf6', // purple
-  [VISA_TYPES.VISA_REQUIRED]: '#ef4444', // red
-  [VISA_TYPES.TRAVEL_RESTRICTED]: '#000000', // black
-  default: '#e5e7eb' // gray for no data
+  [VISA_TYPES.VISA_FREE]: '#10b981',
+  [VISA_TYPES.RIGHT_OF_ABODE]: '#22c55e',
+  [VISA_TYPES.ETA]: '#06b6d4',
+  [VISA_TYPES.VISA_ON_ARRIVAL]: '#3b82f6',
+  [VISA_TYPES.E_VISA]: '#8b5cf6',
+  [VISA_TYPES.VISA_REQUIRED]: '#ef4444',
+  [VISA_TYPES.TRAVEL_RESTRICTED]: '#000000',
+  default: '#e5e7eb'
 };
 
-// Weights for passport power score: (Σ score(c) / N) × 100
 export const VISA_WEIGHTS = {
   [VISA_TYPES.RIGHT_OF_ABODE]: 2.0,
   [VISA_TYPES.VISA_FREE]: 1.0,
@@ -30,10 +27,9 @@ export const VISA_WEIGHTS = {
   [VISA_TYPES.E_VISA]: 0.65,
   [VISA_TYPES.VISA_REQUIRED]: 0.0,
   [VISA_TYPES.TRAVEL_RESTRICTED]: -1.0,
-  [null]: 0.0, // No Data
+  [null]: 0.0
 };
 
-// Complete list of all countries with ISO 3166-1 alpha-2 codes
 export const countryNames = {
   AD: 'Andorra',
   AE: 'United Arab Emirates',
@@ -247,9 +243,8 @@ export const countryNames = {
 };
 
 // Passport types - includes both country passports and special passport types
-// This is what users can select as their passport
 export const passportNames = {
-  // All country passports (using ISO codes)
+  // All country passports
   ...countryNames,
   
   // Special British passport types
@@ -261,11 +256,9 @@ export const passportNames = {
 // Get all passport codes (countries + special passports)
 const allPassportCodes = Object.keys(passportNames);
 
-// All destination country codes for default coverage
 const allCountryCodes = Object.keys(countryNames);
 
 // Initialize visa requirements structure for all passport types
-// Each passport will have an empty object that can be populated with visa data
 export const visaRequirements = {};
 
 // Initialize empty visa requirement objects for all passports
@@ -273,8 +266,7 @@ allPassportCodes.forEach(passportCode => {
   visaRequirements[passportCode] = {};
 });
 
-// US Passport holders - Comprehensive visa requirements
-// Source: https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens
+// US Passport holders
 visaRequirements.US = {
   ...visaRequirements.US,
   // Americas

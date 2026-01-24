@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import WorldMap from './WorldMap';
 import { passportNames, countryNames, VISA_TYPES, VISA_COLORS, getVisaRequirement, computePassportPowerScore } from './visaData';
 
-// Available passports (all passport types - countries + special passports)
 const availablePassports = Object.keys(passportNames).sort((a, b) => 
   passportNames[a].localeCompare(passportNames[b])
 );
@@ -63,7 +62,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-dots bg-gradient-to-br from-slate-100 via-sky-50/80 to-teal-50/90">
-      {/* Header */}
       <header className="relative overflow-hidden border-b border-slate-200/50 bg-gradient-to-r from-slate-800 via-slate-700 to-sky-800 shadow-xl header-pattern">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -111,7 +109,6 @@ function App() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-6 rounded-2xl border border-slate-200/60 bg-white/95 p-6 shadow-xl shadow-slate-200/50 backdrop-blur-sm">
               <div className="flex items-center justify-between mb-4">
@@ -184,7 +181,6 @@ function App() {
                 </div>
               )}
 
-              {/* Legend */}
               <div className="mt-6 pt-6 border-t border-slate-200/70">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">
                   Legend
@@ -245,7 +241,6 @@ function App() {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="mt-12 border-t border-slate-200/60 bg-white/60 py-6 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-xs text-slate-500">

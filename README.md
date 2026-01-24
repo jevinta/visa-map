@@ -1,102 +1,50 @@
-# Visa Map 🌍
+# Visa Map
 
-Interactive world map that shows visa requirements based on your passport(s). Select one or more passports to see which countries you can visit visa-free, with visa on arrival, e-visa, or require a visa.
+Interactive world map of visa requirements by passport. Select one or more passports to see visa-free, visa-on-arrival, ETA, e-visa, or visa-required status per country.
 
 ## Features
 
-- 🗺️ Interactive world map with color-coded visa requirements
-- 📘 Support for multiple passport selection
-- 🎨 Color-coded legend:
-  - 🟢 Green: Visa-free
-  - 🔵 Blue: Visa on arrival
-  - 🟣 Purple: E-visa
-  - 🟠 Amber: Visa required
-  - 🔴 Red: Not allowed
-- 💡 Hover tooltips showing detailed visa information
-- 📱 Responsive design
+- Interactive map (zoom, pan) with color-coded visa status
+- Multi-passport selection
+- Passport Power score when passports are selected
+- Hover tooltips with country name and visa info per passport
+- Responsive layout
+
+## Tech Stack
+
+- React, Vite
+- react-simple-maps, Tailwind CSS
 
 ## Getting Started
 
-### Prerequisites
+**Prerequisites:** Node.js 16+ and npm
 
-- Node.js 16+ and npm
-
-### Installation
-
-1. Install dependencies:
 ```bash
 npm install
-```
-
-2. Start the development server:
-```bash
 npm run dev
 ```
 
-3. Open your browser to `http://localhost:5173`
+Open [http://localhost:5173](http://localhost:5173).
 
-### Building for Production
+**Build:**
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+Output is in `dist/`.
 
 ## Deployment
 
-### Deploy to Vercel
+- **Vercel:** See [DEPLOYMENT_VERCEL.md](./DEPLOYMENT_VERCEL.md).
 
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Vercel will automatically detect the Vite configuration and deploy
+**Netlify:** Import the repo; build command `npm run build`, publish `dist`. The `netlify.toml` in the repo configures this.
 
-Or use the Vercel CLI:
-```bash
-npm i -g vercel
-vercel
-```
-
-### Deploy to Netlify
-
-1. Push your code to GitHub
-2. Import your repository on [Netlify](https://netlify.com)
-3. Netlify will automatically detect the build settings
-
-Or use the Netlify CLI:
-```bash
-npm i -g netlify-cli
-netlify deploy --prod
-```
-
-### Deploy to Other Platforms
-
-The `dist` folder contains static files that can be deployed to any static hosting service:
-- GitHub Pages
-- AWS S3 + CloudFront
-- Azure Static Web Apps
-- Google Cloud Storage
-- Any other static hosting provider
+**Other platforms:** Deploy the `dist` folder to any static host (GitHub Pages, S3 + CloudFront, etc.).
 
 ## Data
 
-The visa data is currently stored in `src/visaData.js` as a sample dataset. To expand the data:
-
-1. Add more countries to the `countryNames` object
-2. Add visa requirements to the `visaRequirements` object
-3. Format: `{ passportCode: { destinationCode: visaType } }`
-
-For production use, consider:
-- Loading data from an API
-- Using a database
-- Integrating with a visa requirement API service
-
-## Tech Stack
-
-- **React** - UI framework
-- **Vite** - Build tool
-- **react-simple-maps** - Interactive map component
-- **Tailwind CSS** - Styling
+Visa data lives in `src/visaData.js`: `countryNames`, `passportNames`, and per-passport visa requirement mappings. The `scripts/` folder has tooling for parsing Wikipedia visa tables.
 
 ## License
 

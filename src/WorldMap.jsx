@@ -7,11 +7,8 @@ import {
 } from 'react-simple-maps';
 import { getVisaRequirement, VISA_COLORS, VISA_TYPES, countryNames, passportNames } from './visaData';
 
-// Using world-atlas TopoJSON - we'll handle different property formats
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-// Country name to ISO code mapping (for cases where TopoJSON doesn't have ISO codes)
-// Includes abbreviations and alternative names used by world-atlas TopoJSON
 const countryNameToCode = {
   'United States of America': 'US',
   'United States': 'US',
@@ -41,7 +38,6 @@ const countryNameToCode = {
   'Bangladesh': 'BD',
   'Sri Lanka': 'LK',
   'Maldives': 'MV',
-  // Abbreviated and alternative names
   'Dominican Rep.': 'DO',
   'Dominican Republic': 'DO',
   'Bosnia and Herzegovina': 'BA',
@@ -78,22 +74,10 @@ const WorldMap = ({ selectedPassports }) => {
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [hoveredCountry, setHoveredCountry] = useState(null);
 
-  // Helper function to get country code from geography properties
   const getCountryCode = (geo) => {
     const props = geo.properties || {};
-    
-    // Debug: log first country's properties to see what we have
-    if (!window._debugLogged && Object.keys(props).length > 0) {
-      console.log('Sample geography properties:', props);
-      console.log('Available keys:', Object.keys(props));
-      window._debugLogged = true;
-    }
-    
-    // Try different possible property names for ISO country codes
-    // Some TopoJSON files use ISO_A2, others use ISO_A3, some use different formats
     let code = props.ISO_A2 || props.iso_a2 || props.ISO_A2_L || props.ISO_A2_E;
-    
-    // Try ISO_A3 and convert to ISO_A2 if needed (e.g., USA -> US)
+
     if (!code && props.ISO_A3) {
       const iso3ToIso2 = {
         'USA': 'US', 'CAN': 'CA', 'MEX': 'MX', 'GBR': 'GB', 'FRA': 'FR',
@@ -106,15 +90,12 @@ const WorldMap = ({ selectedPassports }) => {
       };
       code = iso3ToIso2[props.ISO_A3];
     }
-    
-    // If still no code, try to get it from country name
+
     if (!code) {
       const name = props.NAME || props.NAME_LONG || props.NAME_EN || props.name || props.ADMIN;
       if (name) {
-        // First try exact match in countryNameToCode
         code = countryNameToCode[name];
-        
-        // If not found, try case-insensitive match in countryNameToCode
+
         if (!code) {
           code = Object.keys(countryNameToCode).find(
             key => key.toLowerCase() === name.toLowerCase()
@@ -122,15 +103,13 @@ const WorldMap = ({ selectedPassports }) => {
             key => key.toLowerCase() === name.toLowerCase()
           )] : null;
         }
-        
-        // If still not found, try exact match in countryNames
+
         if (!code) {
           code = Object.keys(countryNames).find(
             key => countryNames[key].toLowerCase() === name.toLowerCase()
           );
         }
-        
-        // If still not found, try normalized match (remove punctuation, extra spaces)
+
         if (!code) {
           const normalizedName = name.toLowerCase().replace(/[.,]/g, '').replace(/\s+/g, ' ').trim();
           code = Object.keys(countryNames).find(
@@ -140,11 +119,9 @@ const WorldMap = ({ selectedPassports }) => {
             }
           );
         }
-        
-        // If still not found, try smart partial matching for known abbreviations
+
         if (!code) {
           const normalizedName = name.toLowerCase().replace(/[.,]/g, '').trim();
-          // Specific known abbreviations
           if (normalizedName.includes('dominican') && normalizedName.includes('rep')) {
             code = 'DO';
           } else if (normalizedName.includes('bosnia') || normalizedName.includes('herzegovina')) {
@@ -171,7 +148,6 @@ const WorldMap = ({ selectedPassports }) => {
     return code || null;
   };
 
-  // Helper function to get country name from geography properties
   const getCountryName = (geo) => {
     const props = geo.properties || {};
     const countryCode = getCountryCode(geo);
@@ -181,8 +157,6 @@ const WorldMap = ({ selectedPassports }) => {
 
   const getCountryColor = (geo) => {
     const countryCode = getCountryCode(geo);
-    
-    // Handle null or invalid country codes
     if (!countryCode) {
       return VISA_COLORS.default;
     }
@@ -191,14 +165,13 @@ const WorldMap = ({ selectedPassports }) => {
       return VISA_COLORS.default;
     }
 
-    // If multiple passports selected, use the best (most favorable) visa status
     let bestStatus = null;
     let bestPriority = Infinity;
 
     const statusPriority = {
-      [VISA_TYPES.RIGHT_OF_ABODE]: 0, // Right of abode is the best status
+      [VISA_TYPES.RIGHT_OF_ABODE]: 0,
       [VISA_TYPES.VISA_FREE]: 1,
-      [VISA_TYPES.ETA]: 2, // ETA is easier than visa on arrival but requires pre-authorization
+      [VISA_TYPES.ETA]: 2,
       [VISA_TYPES.VISA_ON_ARRIVAL]: 3,
       [VISA_TYPES.E_VISA]: 4,
       [VISA_TYPES.VISA_REQUIRED]: 5,
