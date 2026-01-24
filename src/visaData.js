@@ -21,6 +21,18 @@ export const VISA_COLORS = {
   default: '#e5e7eb' // gray for no data
 };
 
+// Weights for passport power score: (Σ score(c) / N) × 100
+export const VISA_WEIGHTS = {
+  [VISA_TYPES.RIGHT_OF_ABODE]: 2.0,
+  [VISA_TYPES.VISA_FREE]: 1.0,
+  [VISA_TYPES.ETA]: 0.9,
+  [VISA_TYPES.VISA_ON_ARRIVAL]: 0.75,
+  [VISA_TYPES.E_VISA]: 0.65,
+  [VISA_TYPES.VISA_REQUIRED]: 0.0,
+  [VISA_TYPES.TRAVEL_RESTRICTED]: -1.0,
+  [null]: 0.0, // No Data
+};
+
 // Complete list of all countries with ISO 3166-1 alpha-2 codes
 export const countryNames = {
   AD: 'Andorra',
@@ -41772,4 +41784,46 @@ export function getVisaRequirement(passportCode, countryCode) {
   if (!passportData) return null;
   
   return passportData[countryCode] || null;
+}
+
+const statusPriority = {
+  [VISA_TYPES.RIGHT_OF_ABODE]: 0,
+  [VISA_TYPES.VISA_FREE]: 1,
+  [VISA_TYPES.ETA]: 2,
+  [VISA_TYPES.VISA_ON_ARRIVAL]: 3,
+  [VISA_TYPES.E_VISA]: 4,
+  [VISA_TYPES.VISA_REQUIRED]: 5,
+  [VISA_TYPES.TRAVEL_RESTRICTED]: 6,
+};
+
+/**
+ * Compute passport power score: (Σ score(c) / N) × 100
+ * N = total destinations, score(c) = weight for destination c.
+ * With multiple passports, uses best (most favorable) status per destination.
+ */
+export function computePassportPowerScore(selectedPassports) {
+  if (!selectedPassports || selectedPassports.length === 0) return null;
+
+  const destinations = Object.keys(countryNames);
+  const N = destinations.length;
+  let sum = 0;
+
+  for (const countryCode of destinations) {
+    let bestStatus = null;
+    let bestPriority = Infinity;
+
+    for (const passport of selectedPassports) {
+      const requirement = getVisaRequirement(passport, countryCode);
+      const priority = requirement == null ? Infinity : statusPriority[requirement];
+      if (priority < bestPriority) {
+        bestStatus = requirement;
+        bestPriority = priority;
+      }
+    }
+
+    const weight = VISA_WEIGHTS[bestStatus ?? null];
+    sum += weight;
+  }
+
+  return (sum / N) * 100;
 }

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import WorldMap from './WorldMap';
-import { passportNames, countryNames, VISA_TYPES, VISA_COLORS, getVisaRequirement } from './visaData';
+import { passportNames, countryNames, VISA_TYPES, VISA_COLORS, getVisaRequirement, computePassportPowerScore } from './visaData';
 
 // Available passports (all passport types - countries + special passports)
 const availablePassports = Object.keys(passportNames).sort((a, b) => 
@@ -9,6 +9,11 @@ const availablePassports = Object.keys(passportNames).sort((a, b) =>
 
 function App() {
   const [selectedPassports, setSelectedPassports] = useState([]);
+  const passportPowerScore = useMemo(
+    () => computePassportPowerScore(selectedPassports),
+    [selectedPassports]
+  );
+
   const visaFreeCount = useMemo(() => {
     if (!selectedPassports.length) {
       return 0;
@@ -88,6 +93,17 @@ function App() {
                   {visaFreeCount}
                 </span>
               </div>
+              {passportPowerScore != null && (
+                <>
+                  <div className="h-10 w-px bg-white/30" />
+                  <div className="flex flex-col">
+                    <span className="text-xs uppercase tracking-wider text-sky-200/90">Passport Power</span>
+                    <span className="text-xl font-bold text-white">
+                      {passportPowerScore.toFixed(1)}
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -152,6 +168,19 @@ function App() {
                       </span>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Passport Power explanation */}
+              {selectedPassports.length > 0 && passportPowerScore != null && (
+                <div className="mt-6 pt-6 border-t border-slate-200/70">
+                  <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
+                    Passport Power
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Score = (Σ weight per destination ÷ N) × 100. Higher = better visa-free access.
+                    Weights: visa-free +1, ETA +0.9, VoA +0.75, e-visa +0.65, required 0, restricted −1.
+                  </p>
                 </div>
               )}
 
