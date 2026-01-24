@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import WorldMap from './WorldMap';
 import { passportNames, countryNames, VISA_TYPES, VISA_COLORS, getVisaRequirement, computePassportPowerScore } from './visaData';
 
@@ -249,6 +250,7 @@ function App() {
           </p>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
