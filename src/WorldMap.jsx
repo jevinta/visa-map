@@ -305,7 +305,7 @@ const WorldMap = ({ selectedPassports }) => {
       
       {tooltipContent && (
         <div
-          className="fixed bg-gray-900 text-white px-3 py-2 rounded shadow-lg text-sm z-50 pointer-events-none whitespace-pre-line"
+          className="fixed rounded-lg border border-slate-700/50 bg-slate-800/95 px-4 py-3 text-sm text-slate-100 shadow-xl shadow-black/20 backdrop-blur-sm z-50 pointer-events-none whitespace-pre-line"
           style={{
             left: `${tooltipPosition.x + 10}px`,
             top: `${tooltipPosition.y + 10}px`,
